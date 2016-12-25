@@ -1,11 +1,13 @@
 package compress;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public  class HuffmanTree<E> {
+public  class HuffmanTree<E> implements Serializable{
 	private LinkedList<Node<E>> list = new LinkedList<Node<E>>();
 	private Node<E>[] nodes;
+	private Node<E> head;
 	private int size;
 	
 	public HuffmanTree(Node<E>[] nodes){
@@ -43,7 +45,12 @@ public  class HuffmanTree<E> {
 		list.remove(minNode2);
 		list.add(buildTree(minNode1,minNode2));
 		}
-		
+		head = list.get(0);
+	}
+	
+	
+	public Node<E> getHead(){
+		return this.head;
 	}
 	
 	public Map<E, String> getEncodeMap(){
@@ -90,7 +97,7 @@ public  class HuffmanTree<E> {
 		return node;
 	}
 	
-	public static class Node<E> {
+	public static class Node<E> implements Serializable{
 		E data;
 		int weight;
 		Node<E> parent;

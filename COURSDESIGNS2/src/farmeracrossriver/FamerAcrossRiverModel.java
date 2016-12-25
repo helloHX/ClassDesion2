@@ -99,20 +99,20 @@ public class FamerAcrossRiverModel {
 		for (int i = 0; i < 4; i++) {
 			String position = node[i] == '0' ? "南" : "北";
 			System.out.print(node[i]);
-//			switch (i) {
-//			case 0:
-//				System.out.print("农夫在" + position);
-//				break;
-//			case 1:
-//				System.out.print(",狼在" + position);
-//				break;
-//			case 2:
-//				System.out.print(",羊在" + position);
-//				break;
-//			case 3:
-//				System.out.print(",白菜在" + position);
-//				break;
-//			}
+			switch (i) {
+			case 0:
+				System.out.print("农夫在" + position);
+				break;
+			case 1:
+				System.out.print(",狼在" + position);
+				break;
+			case 2:
+				System.out.print(",羊在" + position);
+				break;
+			case 3:
+				System.out.print(",白菜在" + position);
+				break;
+			}
 		}
 		System.out.println();
 
