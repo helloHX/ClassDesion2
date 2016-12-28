@@ -3,13 +3,11 @@ package compress;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import javax.management.monitor.Monitor;
+import javax.swing.ProgressMonitorInputStream;
 
 import compress.HuffmanTree.Node;
 
@@ -29,7 +30,8 @@ public class Compress {
 	private FileOutputStream saveStream;
 	private String maintainBinaryStrring = "";
 	private BufferedOutputStream bos;
-
+	private Monitor monitor;//监听文件了读取
+	
 	public Compress() {
 
 	}
@@ -52,18 +54,25 @@ public class Compress {
 
 			BufferedInputStream fileInputStrem = new BufferedInputStream(
 					new FileInputStream(new File(compressFileName)));
-
+			
+			
 			BufferedReader fileInput = new BufferedReader(
-					new InputStreamReader(fileInputStrem, "utf-8"));
-
+					new InputStreamReader(fileInputStrem, "GBk"));
+			
+			int all = fileInputStrem.available();
+			
+			
+			
 			String letterLine;
 			while ((letterLine = fileInput.readLine()) != null) {
 				char[] letters = letterLine.toCharArray();
 
 				for (int i = 0; i < letters.length; i++) {
 					int Amont = 0;
+					
 					if (weightingMap.get(letters[i]) != null)
 						Amont = weightingMap.get(letters[i]);
+					
 					weightingMap.put(letters[i], Amont + 1);
 				}
 
@@ -87,6 +96,13 @@ public class Compress {
 
 	}
 
+	public HuffmanTree<Character> getHuffmanTree(){
+		return this.huffmanTree;
+	}
+	
+	public String getTragetFile(){
+		return this.tragetFile;
+	}
 	public void saveHuffmanTree() {
 		ObjectOutputStream saveHuffmanTree = null;
 		try {
@@ -115,12 +131,15 @@ public class Compress {
 
 			bos = new BufferedOutputStream(new FileOutputStream(tragetFile,
 					true));
+			
 			inputStream = new BufferedInputStream(new FileInputStream(
 					compressFileName));
+			
 			BufferedReader bReader = new BufferedReader(new InputStreamReader(
-					inputStream, "utf-8"));
+					inputStream, "GBk"));
 
 			StringBuffer text = new StringBuffer();
+			
 			String line = "";
 			int readSize = 0;
 
@@ -134,6 +153,7 @@ public class Compress {
 				}
 			}
 			ChangeToBinary(text.toString(), true);
+			
 			bos.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -197,8 +217,8 @@ public class Compress {
 		}
 	}
 
-	public static void main(String[] args) {
-		Compress compress = new Compress("canada.bmp");
-	}
+//	public static void main(String[] args) {
+//		Compress compress = new Compress("F:/Mycode/ClassDesion/COURSDESIGNS2/123.txt");
+//	}
 
 }

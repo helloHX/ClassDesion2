@@ -24,15 +24,16 @@ public class Decompress {
 	private String tragetFile;
 	private BufferedInputStream dataStream;
 	
-	public static void main(String[] args) {
-		Decompress decompress = new Decompress("canada2.bmp", "canada.dat");
-	}
+//	public static void main(String[] args) {
+//		Decompress decompress = new Decompress("236.txt", "123.dat");
+//	}
+	
 	public Decompress(String tragetFile, String decompressFileName) {
 		this.tragetFile = tragetFile;
 		this.decompressFileName = decompressFileName;
 		
 		try {
-			System.out.println(decompressFileName);
+			
 			
 			 dataStream = 
 					new BufferedInputStream(new FileInputStream(decompressFileName));
@@ -47,9 +48,13 @@ public class Decompress {
 
 	public void loadHuffmanTree() {// 从文件中获取haffman树
 		try {
+			System.out.println(decompressFileName);
+			int suffixNameIndex = decompressFileName.lastIndexOf('\\');
+			
+			String huffman = decompressFileName.substring(0, suffixNameIndex + 1) + "huffman.dat";
 			
 			ObjectInputStream loadHfmTStream = new ObjectInputStream(
-					new BufferedInputStream(new FileInputStream("huffman.dat")));
+					new BufferedInputStream(new FileInputStream(huffman)));
 			huffmanTree = (HuffmanTree<Character>)loadHfmTStream.readObject();
 		}
 		catch (Exception e) {
@@ -62,11 +67,13 @@ public class Decompress {
 		long fileLength = fileDecompress.length();
 		int tailbyte = (int) (fileLength % 1000);
 		byte[] contentByte = new byte[1000];
+		
 		byte[] tailContenByte = new byte[tailbyte];
 		try {
 
 			bos = new BufferedOutputStream(new FileOutputStream(tragetFile,true));
 			br = new BufferedWriter(new OutputStreamWriter(bos, "GBK"));
+			
 				for (int i = 0; i < fileLength / 1000; i++) {//分次读取减小内存压力
 				
 					dataStream.read(contentByte);
@@ -115,6 +122,7 @@ public class Decompress {
 
 		StringBuffer binaryStringBuffer = new StringBuffer();
 		byteString = maintainString + byteString;//将上一次解压的剩余的内容添加在末尾
+		
 		String subString = "";
 
 		headNode = huffmanTree.getHead();
@@ -126,7 +134,7 @@ public class Decompress {
 			for (int j = i; j < byteString.length(); j++) {
 
 				if (currentNode.Lchild == null && currentNode.Rchild == null) {
-                   System.out.print(currentNode.data);
+                    System.out.print(currentNode.data);
 					binaryStringBuffer.append(currentNode.data);
 					i = j - 1;
 					break;
