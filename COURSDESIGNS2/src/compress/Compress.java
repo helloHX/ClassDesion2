@@ -166,7 +166,12 @@ public class Compress {
 		StringBuffer binaryStringBuffer = new StringBuffer();
 
 		for (int i = 0; i < letterArray.length; i++) {// 将文件内容逐个转码
-			binaryStringBuffer.append(encodeMap.get(letterArray[i]));
+			if(encodeMap.get(letterArray[i]) == null){
+			   System.out.println(letterArray[i]);
+			}
+			else
+			   binaryStringBuffer.append(encodeMap.get(letterArray[i]));
+		
 		}
 
 		ChangeToByte(binaryStringBuffer, isLast);
