@@ -6,14 +6,14 @@ import java.util.List;
 
 public class NineTailModel {
 
-	public final static int NUMBER_OF_NODE = 512;
+	public final static int NUMBER_OF_NODE = 65536;//65536
 	protected AbstractGraph<Integer>.Tree tree;
 	
 	public NineTailModel(){
 		List<AbstractGraph.Edge> edges = getEdges();
 		UnweightedGraph<Integer> graph = new UnweightedGraph<Integer>(edges,
 				NUMBER_OF_NODE);
-		tree = graph.bfs(511);
+		tree = graph.bfs(65535);
 		
 	}
 	
@@ -21,11 +21,11 @@ public class NineTailModel {
 		List<AbstractGraph.Edge> edges =
 				new ArrayList<AbstractGraph.Edge>();
 		for(int u = 0; u < NUMBER_OF_NODE;u++){
-			for(int k = 0; k < 9; k++){
+			for(int k = 0; k < 16; k++){
 				char[] node = getNode(u);
 				if(node[k] == 'H'){
 					int v = getFlippedNode(node,k);
-					edges.add(new AbstractGraph.Edge(v, u));
+					edges.add(new AbstractGraph.Edge(v, u));//ÓÐÏò±ß
 				}
 			}
 		}
@@ -33,8 +33,8 @@ public class NineTailModel {
 	}
 	
 	public static int getFlippedNode(char[] node,int posistion){
-		int row = posistion / 3;
-		int column = posistion % 3;
+		int row = posistion / 4;
+		int column = posistion % 4;
 		
 		flipACell(node,row,column);
 		flipACell(node,row - 1,column);
@@ -46,17 +46,17 @@ public class NineTailModel {
 	}
 	
 	public static void flipACell(char[] node,int row,int column){
-		if(row >= 0&& row <= 2 && column >= 0 && column <= 2){
-			if(node[row * 3 + column] == 'H')
-			node[row * 3 + column] = 'T';
+		if(row >= 0&& row <= 3 && column >= 0 && column <= 3){
+			if(node[row * 4 + column] == 'H')
+			node[row * 4 + column] = 'T';
 			else
-				node[row * 3 + column] = 'H';
+				node[row * 4 + column] = 'H';
 		}
 	}
 	
 	public static int getIndex(char[] node){
 		int result = 0;
-		for(int i = 0; i < 9;i++)
+		for(int i = 0; i < 16;i++)
 			if(node[i] == 'T')
 				result = result * 2 + 1;
 			else
@@ -66,14 +66,14 @@ public class NineTailModel {
 	}
 	
 	public static char[] getNode(int index){
-		char[] result = new char[9];
+		char[] result = new char[16];
 		
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 16; i++) {
 			int digit = index % 2;
 			if(digit == 0)
-				result[8 - i] = 'H';
+				result[15 - i] = 'H';
 			else
-				result[8 - i] = 'T';
+				result[15 - i] = 'T';
 			index = index /2;
 			
 		}
@@ -85,8 +85,8 @@ public class NineTailModel {
 	}
 	
 	public static void printNode(char[] node){
-		for (int i = 0; i < 9; i++) 
-			if(i % 3 != 2)
+		for (int i = 0; i < 16; i++) 
+			if(i % 4 != 3)
 				System.out.print(node[i]);
 			else
 				System.out.println(node[i]);

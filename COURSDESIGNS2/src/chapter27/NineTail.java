@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class NineTail {
 
 	public static void main(String[] args){
-		System.out.println("Enter an initail nine coin H'");
+		System.out.println("Enter an initail 16 coin H'");
 		Scanner input = new Scanner(System.in);
 		String s = input.nextLine();
 		char[] initialNode = s.toCharArray();
