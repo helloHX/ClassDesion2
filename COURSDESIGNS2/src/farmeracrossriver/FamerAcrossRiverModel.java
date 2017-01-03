@@ -1,10 +1,17 @@
+/**
+ * 通过模仿翻硬币的方式
+ * 构建农夫过河
+ * 寻找出农夫所有过河方式
+ * 通过广度遍历返回最优路径
+ */
 package farmeracrossriver;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-import chapter27.AbstractGraph;
-import chapter27.UnweightedGraph;
+import tool.AbstractGraph;
+import tool.UnweightedGraph;
 
 public class FamerAcrossRiverModel {
 	public final static int NUMBER_OF_NODE = 16;
@@ -18,7 +25,7 @@ public class FamerAcrossRiverModel {
 	}
 
 	private List<AbstractGraph.Edge> getEdges() {
-		List<AbstractGraph.Edge> edges = new ArrayList<AbstractGraph.Edge>();
+		List<AbstractGraph.Edge> edges = new LinkedList<AbstractGraph.Edge>();
 		for (int u = 0; u < NUMBER_OF_NODE; u++) {
 			for (int k = 0; k < 4; k++) {
 				char[] node = getNode(u);
@@ -33,30 +40,31 @@ public class FamerAcrossRiverModel {
 		return edges;
 	}
 
-	public static int getMoveNode(char[] node, int posistion) {
+	public static int getMoveNode(char[] node, int posistion) {//传入当前所有对象的的情况，同时传来需要移动的对象
 		char[] tempNode = new char[node.length];
 		
 		System.arraycopy(node, 0, tempNode, 0, node.length);
 		
-		if (posistion != 0) {
+		if (posistion != 0) {//如果移动的不是农夫，则需要农夫伴随当前对象一起移动
 			MoveThing(tempNode, 0);
 			MoveThing(tempNode, posistion);
 		} else
 			MoveThing(tempNode,0);
 		
-		boolean sheepWolf = (tempNode[1] == tempNode[2]);
-		boolean sheepCabbage = (tempNode[2] == tempNode[3]);
+		boolean sheepWolf = (tempNode[1] == tempNode[2]);//判断狼羊的状态
+		boolean sheepCabbage = (tempNode[2] == tempNode[3]);//羊白菜的状态
 		
 		if((sheepWolf && (tempNode[1] != tempNode[0])) 
 				|| (sheepCabbage && (tempNode[2] != tempNode[0]))){//狼羊不能够在一起，羊菜不能够在一起，除非人在场
-			return -1;
+			return -1;//这种情况应被设为不可达
 		}else{
-			System.arraycopy(tempNode, 0,node, 0, tempNode.length);
+			System.arraycopy(
+					tempNode, 0,node, 0, tempNode.length);
 			return getIndex(node);
 		}
 	}
 
-	public static void MoveThing(char[] node, int posistion) {
+	public static void MoveThing(char[] node, int posistion) {//改变位置
 		if (node[posistion] == '0')
 			node[posistion] = '1';
 		else
@@ -64,7 +72,7 @@ public class FamerAcrossRiverModel {
 
 	}
 
-	public static char[] getNode(int index) {
+	public static char[] getNode(int index) {//通过下标获取到相应状态
 		char[] result = new char[4];
 
 		for (int i = 0; i < 4; i++) {
@@ -79,7 +87,7 @@ public class FamerAcrossRiverModel {
 		return result;
 	}
 
-	public static int getIndex(char[] node) {
+	public static int getIndex(char[] node) {//通过状态获取相应下标
 		int result = 0;
 		for (int i = 0; i < 4; i++)
 			if (node[i] == '1')
@@ -91,11 +99,12 @@ public class FamerAcrossRiverModel {
 	}
 
 	public List<Integer> getShortestPath(int nodeIndex) {
+		//以一个位置作为起点寻找将所有对象安全移动到北岸的方法
 		return tree.getPath(nodeIndex);
 	}
 
 	public static void printNode(char[] node) {
-
+//打印各种状态
 		for (int i = 0; i < 4; i++) {
 			String position = node[i] == '0' ? "南" : "北";
 			System.out.print(node[i]);

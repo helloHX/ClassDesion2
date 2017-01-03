@@ -6,7 +6,7 @@ import java.util.List;
 public class FamerAcrossRiver {
 	public static void main(String[] args) {
 		System.out.println("The Famer Across The River");
-		char[] initialNode= {0,0,0,0};
+		char[] initialNode= {0,0,0,0};//初始化将所有对象都放在南岸
 		
 		FamerAcrossRiverModel mode = new FamerAcrossRiverModel();
 		int index = FamerAcrossRiverModel.getIndex(initialNode);

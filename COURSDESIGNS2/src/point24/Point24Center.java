@@ -1,6 +1,7 @@
 package point24;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -10,12 +11,14 @@ import javax.swing.JPanel;
 public class Point24Center extends JPanel{
 	
 	public int[] carNumber = new int[4];
-	
+
+    
 	public Point24Center(){
+		
 		full();
 	}
 	
-	public void flash(){
+	public void flash(){//移出旧牌刷新牌
 		this.removeAll();
 		full();
 		this.repaint();
@@ -23,7 +26,7 @@ public class Point24Center extends JPanel{
 		
 	}
 	
-	public void full(){
+	public void full(){//将随机生成不重复的四张牌
 		this.setPreferredSize(new Dimension(300, 150));
 		this.setLayout(new GridLayout(1,3,5,5));
 		for (int i = 0; i < 4; i++) {
@@ -38,7 +41,7 @@ public class Point24Center extends JPanel{
 		}
 	}
 	
-	public JPanel addCard(String p){
+	public JPanel addCard(String p){//将卡片加到界面上
 		
 		ImageIcon icon = new ImageIcon(p);
 		Image img = icon.getImage();
@@ -47,7 +50,7 @@ public class Point24Center extends JPanel{
 		return jpl;
 	}
 	
-	public boolean isUnique(int noCar){
+	public boolean isUnique(int noCar){//判断与前几张牌内容是否相同
 		boolean isUnique = true;
 		for(int i = 0;i < carNumber.length;i++){
 			if(noCar == carNumber[i])
@@ -56,7 +59,9 @@ public class Point24Center extends JPanel{
 		return isUnique;
 	}
 	
-	public int[] getCarNumber(){
+	public int[] getCarNumber(){//获取当前内容的牌
 		return this.carNumber;
 	}
+	
+
 }

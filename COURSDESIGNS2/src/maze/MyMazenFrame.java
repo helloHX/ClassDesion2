@@ -85,7 +85,7 @@ public class MyMazenFrame extends JFrame {
 			}
 		});
 		
-		save.addActionListener(new ActionListener() {
+		save.addActionListener(new ActionListener() {//点击保存后保存
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -94,7 +94,7 @@ public class MyMazenFrame extends JFrame {
 
 		});
 		
-		shrink.addActionListener(new ActionListener() {
+		shrink.addActionListener(new ActionListener() {//将DATAPANEL收回
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +132,7 @@ public class MyMazenFrame extends JFrame {
 	}
 
 	
-	public void saveOneMaze() {
+	public void saveOneMaze() {//保存当前的迷宫
 		if (mazemap.isVrify()) {
 			if (mazeList == null) {//如果没有相应文件则创建一个新的文件
 				mazeList = new LinkedList<>();
@@ -155,7 +155,7 @@ public class MyMazenFrame extends JFrame {
 		}
 	}
 
-	public void outPutToFile() {
+	public void outPutToFile() {//将保存下来的内容输出到文件中
 		try {
 			try (ObjectOutputStream saveMazes = new ObjectOutputStream(
 					new BufferedOutputStream(new FileOutputStream("Mazes.dat")));) {
@@ -167,7 +167,7 @@ public class MyMazenFrame extends JFrame {
 		}
 	}
 
-	public void loadMaze() {
+	public void loadMaze() {//将文件中的内容加载到datapanel上
 		try {
 			ObjectInputStream loadMazes = new ObjectInputStream(
 					new BufferedInputStream(new FileInputStream("Mazes.dat")));
@@ -183,7 +183,7 @@ public class MyMazenFrame extends JFrame {
 		}
 	}
 
-	public void fresh() {
+	public void fresh() {//刷新
 		this.doLayout();
 		pack();
 	}

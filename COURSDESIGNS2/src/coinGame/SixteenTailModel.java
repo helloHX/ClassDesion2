@@ -3,8 +3,8 @@ package coinGame;
 import java.util.ArrayList;
 import java.util.List;
 
-import chapter27.AbstractGraph;
-import chapter27.UnweightedGraph;
+import tool.AbstractGraph;
+import tool.UnweightedGraph;
 
 public class SixteenTailModel {
 	//总共有2的16次方个结点

@@ -24,7 +24,7 @@ public class Point24Frame extends JFrame {
 	public Point24Frame(){
 		
 		this.setLayout(new BorderLayout(10,5));
-		
+		inputPanel.setOpaque(false);
 		inputPanel.add(pointLable,BorderLayout.WEST);
 		inputPanel.add(inputJtf,BorderLayout.CENTER);
 		inputPanel.add(verifyButton,BorderLayout.EAST);
@@ -42,10 +42,11 @@ public class Point24Frame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			String expression = inputJtf.getText();
-			Verify verify = new Verify();
+			String expression = inputJtf.getText();//获取输入的内容
+			Verify verify = new Verify();//创建一个验证对象
 			if(verify.Comform(centerPanle.getCarNumber(),expression)){
-			switch (verify.Calculter(expression)) {
+				//将从centerPanel中获取到的卡片信息，和用户输入的信息一同传到逻辑层判断两者在概念上是否相同
+			switch (verify.Calculter(expression)) {//通过逻辑层的判断暂时相关的提示
 			case 0:
 				JOptionPane.showMessageDialog(null, "Correct",
 						"消息", JOptionPane.INFORMATION_MESSAGE); 

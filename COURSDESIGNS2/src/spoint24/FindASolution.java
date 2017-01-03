@@ -14,7 +14,7 @@ public class FindASolution {
 		
 	}
 	
-	public String createExpression(int[] noCar){
+	public String createExpression(int[] noCar){//通过卡片上展示的数值构造一个表达式
 		LinkedList<Integer> list = new LinkedList<>();
 		for (int i = 0; i < noCar.length; i++) {
 				noCar[i] = noCar[i] % 13;
@@ -25,7 +25,7 @@ public class FindASolution {
 		
 		int[] newArray = new int[noCar.length];
 		
-		for (int a = 0; a < 4; a++)
+		for (int a = 0; a < 4; a++)//交换各个数值的位置
 			for (int b = 0; b < 4; b++) {
 				if (b == a) {
 					continue;
@@ -55,6 +55,7 @@ public class FindASolution {
 	}
 	
 	public boolean SimpleExpression(int[] operand){
+		//通过以上的数值的排列方式加上当前的运算符构造出简单的运算式
 		String[] simpleExpression = new String[7];
 		//将操作数插入
 		simpleExpression[0] = operand[0] + "";
@@ -78,6 +79,7 @@ public class FindASolution {
 	}
 	
 	public boolean standardExpression(String[] sE){
+		//通过以上的简单运算式，添加不同形式的括号构造出复杂的运算式
 		String[] standardexpression = new String[7];
 		standardexpression[0] = sE[0] + sE[1] + sE[2] + sE[3] + sE[4] + sE[5] + sE[6];
 		standardexpression[1] = "(" + sE[0] + sE[1] + sE[2] + ")" + sE[3] + sE[4] + sE[5] + sE[6];
@@ -96,7 +98,7 @@ public class FindASolution {
 		 return false;
 	}
 	
-	public boolean Calculate(String equaltion){
+	public boolean Calculate(String equaltion){//计算传入的等式
 	    Stack<Character> operatorStack = new Stack<Character>();
 	    Stack<Double> operandStack = new Stack<Double>();
 	    
@@ -168,7 +170,7 @@ public class FindASolution {
 					operandStack.push(op2 * op1);
 					return true;
 				}
-				else if(op == '/' && op1 != 0){
+				else if(op == '/' && op1 != 0){//在做除法前判断分母是否为零
 					operandStack.push(op2 / op1);
 					return true;
 				}

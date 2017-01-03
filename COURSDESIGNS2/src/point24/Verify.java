@@ -11,9 +11,9 @@ public class Verify {
 	}
 
 	public boolean Comform(int[] noCar, String equaltion) {
-		
+		//判断几张牌是否和用户输入的几张牌一样
 		for (int i = 0; i < noCar.length; i++) {
-			noCar[i] = noCar[i] % 13;
+			noCar[i] = noCar[i] % 13;//首先将牌信息转换成牌上的数值
 			if(noCar[i] == 0)
 				noCar[i] = 13;
 		}
@@ -25,7 +25,7 @@ public class Verify {
 
 	}
 
-	public boolean isShowNumber(int[] noCar, String equaltion) {
+	public boolean isShowNumber(int[] noCar, String equaltion) {//实际的分离和比较内容是否相同
 		StringTokenizer tokens =  new StringTokenizer(equaltion," (*+/-)",false);
 		int[] inputNum = new int[tokens.countTokens()];
 		int i = 0;
@@ -54,6 +54,7 @@ public class Verify {
 	}
 	
 	public String illegal(String equaltion){
+		//判断输入的等式是否合法，同时计算出结果与24比较
 	    Stack<Character> operatorStack = new Stack<Character>();
 	    Stack<Double> operandStack = new Stack<Double>();
 	    
@@ -117,7 +118,7 @@ public class Verify {
 		 
 	}
 	
-	public int Calculter(String equaltion){
+	public int Calculter(String equaltion){//计算用户输入的情况
 		String result = illegal(equaltion);
 		if(result == null){
 			return -1;
@@ -131,7 +132,7 @@ public class Verify {
 	}
 	
 	 public  boolean processAnOperator(Stack<Double> operandStack,
-				Stack<Character> operatorStack) {
+				Stack<Character> operatorStack) {//栈内操作符，和数值的简单计算
 			// TODO Auto-generated method stub
 			char op = operatorStack.pop();
 			Double op1 = operandStack.pop();
